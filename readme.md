@@ -46,7 +46,7 @@ qb-debug %x format shows the first eight bytes in hex which is often enough to r
 
     debug('buffer with x format: %x', buf)
     
-    > debug buffer with x format: 2a6bf1d2 +2ms
+    > debug buffer with x format: 2A6BF1D2 +2ms
     
 # Nested Object Handling with %x format
 
@@ -62,7 +62,7 @@ So if you have id's and keys in inside an object:
 
 %x gives you this:
 
-    > debug nested object with x format: {"name":"an object","values":["2a6bf1d2",null,"last"]} +1ms
+    > debug nested object with x format: {"name":"an object","values":["2A6BF1D2",null,"last"]} +1ms
 
 insead of the this JSON output (using the normal %j):
 
