@@ -16,36 +16,71 @@
 
 var debug = require('debug')
 
-function is_byte_array (a) {
-  if (ArrayBuffer.isView(a)) {
-    return true
+// array lookup of printable ascii chars
+var ASCII = (function () {
+  var ret = new Uint8Array(256).fill(0)
+  for (var i=32; i <= 127; i++) {
+    ret[i] = 1
   }
-  if (Array.isArray(a)) {
-    for (var i=0; i < a.length; i++) {
-      if (typeof a[i] !== 'number' || a[i] < 0 || a[i] > 0xFF) {
-        return false
+  return ret
+})()
+
+// return 'buf', 'arr', 'view', or null (not an array type)
+function arr_type (v) {
+  if (Buffer.isBuffer(v)) {
+    return 'buf'
+  } else if (Array.isArray(v)) {
+    return 'arr'
+  } else if (ArrayBuffer.isView(v)) {
+    return 'view'
+  } else {
+    return null
+  }
+}
+
+// return 'ascii', 'hex', or null (for objects or arrays with non-byte values)s
+function arr_format (v) {
+  if (v.type === 'Buffer' && v.data) {
+    v = v.data
+  }
+  switch (arr_type(v)) {
+    case 'arr':
+      // check that values are bytes
+      for (var i=0; i < v.length; i++) {
+        if (typeof v[i] !== 'number' || v[i] < 0 || v[i] > 0xFF) {
+          return null
+        }
       }
-    }
-    return true
+      break
+    case 'buf': case 'view':
+      break
+    default:
+      return null
   }
-  return false
+
+  // check if all values are ascii
+  for (var j=0; j<v.length; j++) {
+    if (ASCII[v[j]] === 0) {
+      return 'hex'
+    }
+  }
+  return 'ascii'
 }
 
 function buf2str (v, maxchars) {
-  if (is_byte_array(v)) {
-    v = Buffer.from(v)
-  } else if (v.type === 'Buffer' && v.data && Array.isArray(v.data)) {
-    v = Buffer.from(v.data)
+  var ret
+  switch (arr_format(v)) {
+    case 'ascii':
+      ret = Buffer.from(v).slice(0, maxchars || v.length).toString('ascii')
+      break
+    case 'hex':
+      maxchars = maxchars ? (maxchars / 2) : v.length   // 1 byte = 2 chars.
+      ret = 'x' + Buffer.from(v).slice(0, maxchars).toString('hex').toUpperCase()
+      break
+    default:
+      ret = v   // not a byte array.  do not convert.
   }
-
-  if (Buffer.isBuffer(v)) {
-    v = v.toString('hex')
-    if (maxchars != null && v.length > maxchars) {
-      v = v.substr(0, maxchars)
-    }
-    v = v.toUpperCase()
-  }
-  return v
+  return ret
 }
 
 // format a buffer to a truncated hex string of maxchars in length.
