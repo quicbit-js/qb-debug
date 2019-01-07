@@ -42,7 +42,7 @@ test('debug output', function (t) {
   })
 })
 test('debug maxchars option', function (t) {
-  var d1 = debug('d1', {maxchars: 2})
+  var d1 = debug('d1', {x_maxchars: 2})
   d1.useColors = false
   d1.inspectOpts = { useColors: false, hideDate: true }
   d1.enabled = true

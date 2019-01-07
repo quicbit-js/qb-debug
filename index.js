@@ -68,7 +68,7 @@ function format_x_fn (maxchars) {
 
 function create (namespace, opt) {
   opt = opt || {}
-  debug.formatters.x = format_x_fn (opt.maxchars || 8)
+  debug.formatters.x = format_x_fn (opt.x_maxchars || 8)
   debug.inspectOpts.hideDate = true
   return debug(namespace)
 }
