@@ -41,8 +41,9 @@ function buf2str (v, maxchars) {
   if (Buffer.isBuffer(v)) {
     v = v.toString('hex')
     if (maxchars != null && v.length > maxchars) {
-      v = v.slice(0, maxchars)
+      v = v.substr(0, maxchars)
     }
+    v = v.toUpperCase()
   }
   return v
 }

@@ -24,16 +24,16 @@ test('debug output', function (t) {
   d1.enabled = true
   d1.log = t.hector()
   t.table_assert([
-    [ 'args',                                              'exp' ],
-    [ ['hi'],                                              'd1 hi' ],
-    [ ['array1 %x', [1,2,3,4,5]],                          'd1 array1 01020304' ],
-    [ ['array2 %x', [0xAB, 0xFF]],                         'd1 array2 abff' ],
-    [ ['buf data %x', { type: 'Buffer', data: [0xAB, 0xFF] } ], 'd1 buf data abff' ],
-    [ ['uint buffer %x', Uint8Array.from([0xAB, 0xFF])],   'd1 uint buffer abff' ],
-    [ ['buffer %x', Buffer.from([0xAB, 0xFF])],            'd1 buffer abff' ],
-    [ ['object %x', { a: 'hi', b: ['x', 'y']}],            'd1 object {"a":"hi","b":["x","y"]}' ],
-    [ ['number %x', 23 ],                           'd1 number 23' ],
-    [ ['object %x', { a: 'hi', b: [0xAB, 0, 0xFF], c: Uint8Array.from([0x12, 0x34])}],  'd1 object {"a":"hi","b":"ab00ff","c":"1234"}' ],
+    [ 'args',                                                                           'exp' ],
+    [ ['hi'],                                                                           'd1 hi' ],
+    [ ['array1 %x', [1,2,3,4,5]],                                                       'd1 array1 01020304' ],
+    [ ['array2 %x', [0xAB, 0xFF]],                                                      'd1 array2 ABFF' ],
+    [ ['buf data %x', { type: 'Buffer', data: [0xAB, 0xFF] } ],                         'd1 buf data ABFF' ],
+    [ ['uint buffer %x', Uint8Array.from([0xAB, 0xFF])],                                'd1 uint buffer ABFF' ],
+    [ ['buffer %x', Buffer.from([0xAB, 0xFF])],                                         'd1 buffer ABFF' ],
+    [ ['object %x', { a: 'hi', b: ['x', 'y']}],                                         'd1 object {"a":"hi","b":["x","y"]}' ],
+    [ ['number %x', 23 ],                                                               'd1 number 23' ],
+    [ ['object %x', { a: 'hi', b: [0xAB, 0, 0xFF], c: Uint8Array.from([0x12, 0x34])}],  'd1 object {"a":"hi","b":"AB00FF","c":"1234"}' ],
   ], function (args) {
     d1.apply(null, args)
     var ret = d1.log.args.join(', ')
@@ -49,8 +49,8 @@ test('debug maxchars option', function (t) {
   d1.log = t.hector()
   t.table_assert([
     [ 'args',                                              'exp' ],
-    [ ['uint buffer %x', Uint8Array.from([0xAB, 0xFF])],   'd1 uint buffer ab' ],
-    [ ['buffer %x', Buffer.from([0xAB, 0xFF])],            'd1 buffer ab' ],
+    [ ['uint buffer %x', Uint8Array.from([0xAB, 0xFF])],   'd1 uint buffer AB' ],
+    [ ['buffer %x', Buffer.from([0xAB, 0xFF])],            'd1 buffer AB' ],
   ], function (args) {
     d1.apply(null, args)
     var ret = d1.log.args.join(', ')
