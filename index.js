@@ -71,11 +71,14 @@ function buf2str (v, maxchars) {
   var ret
   switch (arr_format(v)) {
     case 'ascii':
-      ret = Buffer.from(v).slice(0, maxchars || v.length).toString('ascii')
+      ret = Buffer.from(v).slice(0, maxchars).toString('ascii')
+      if (v.length > maxchars) {
+        ret += '..'
+      }
       break
     case 'hex':
-      maxchars = maxchars ? (maxchars / 2) : v.length   // 1 byte = 2 chars.
-      ret = 'x' + Buffer.from(v).slice(0, maxchars).toString('hex').toUpperCase()
+      // 1 byte = 2 chars.
+      ret = 'x' + Buffer.from(v).slice(0, maxchars/2).toString('hex').toUpperCase()
       break
     default:
       ret = v   // not a byte array.  do not convert.

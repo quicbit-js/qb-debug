@@ -27,6 +27,8 @@ test('debug output', function (t) {
     [ 'args',                                                                           'exp' ],
     [ ['hi'],                                                                           'd1 hi' ],
     [ ['array1 %x', [97,98,99]],                                                        'd1 array1 abc' ],
+    [ ['array1 %x', Buffer.from('abcdefgh')],                                           'd1 array1 abcdefgh' ],
+    [ ['array1 %x', Buffer.from('abcdefghi')],                                          'd1 array1 abcdefgh..' ],
     [ ['array1 %x', [1,2,3,4,5]],                                                       'd1 array1 x01020304' ],
     [ ['array1 %x', [1,2,3,4,500]],                                                     'd1 array1 [1,2,3,4,500]' ],
     [ ['array2 %x', [0xAB, 0xFF]],                                                      'd1 array2 xABFF' ],
