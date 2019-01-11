@@ -26,6 +26,8 @@ test('debug output', function (t) {
   t.table_assert([
     [ 'args',                                                                           'exp' ],
     [ ['hi'],                                                                           'd1 hi' ],
+    [ ['empty1 %x', []],                                                                'd1 empty1 []' ],
+    [ ['empty2 %x', Buffer.from('')],                                                   'd1 empty2 []' ],
     [ ['array1 %x', [97,98,99]],                                                        'd1 array1 abc' ],
     [ ['array1 %x', Buffer.from('abcdefgh')],                                           'd1 array1 abcdefgh' ],
     [ ['array1 %x', Buffer.from('abcdefghi')],                                          'd1 array1 abcdefgh..' ],

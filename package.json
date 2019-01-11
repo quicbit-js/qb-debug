@@ -1,6 +1,6 @@
 {
   "name": "qb-debug",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "qb-debug",
   "homepage": "https://github.com/quicbit-js/qb-debug",
   "url": "https://github.com/quicbit-js/qb-debug/issues",
@@ -8,7 +8,7 @@
   "repository": "quicbit-js/qb-debug",
   "dependencies": {
     "debug": "^4.1.1",
-    "qb-buf2str": "^1.0.0"
+    "qb-buf2str": "^1.0.1"
   },
   "devDependencies": {
     "tape": "^4.9.1",
